@@ -1,7 +1,11 @@
 package com.springboot.board.user;
 
+import java.util.Optional;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.springboot.board.DataNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +28,16 @@ public class UserService {
 		this.userRepository.save(user);
 		
 		return user;
+	}
+	
+	public SiteUser getUser(String username) {
+		Optional<SiteUser> siteUser = this.userRepository.findByUsername(username);
+		
+		if(siteUser.isPresent()) {	// siteUser 에 데이터가 있으면
+			return siteUser.get();
+		}else {
+			throw new DataNotFoundException("siteuser not found");
+		}
 	}
 	
 }

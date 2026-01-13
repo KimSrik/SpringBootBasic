@@ -1,5 +1,6 @@
 package com.springboot.board.question;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.springboot.board.answer.AnswerForm;
+import com.springboot.board.user.SiteUser;
+import com.springboot.board.user.UserService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,8 @@ import lombok.RequiredArgsConstructor;
 public class QuestionController {
 	
 	private final QuestionService questionService;
+	
+	private final UserService userService;
 	
 	// 글 목록보기
 	@GetMapping("/list")
@@ -58,13 +63,15 @@ public class QuestionController {
 	
 	// 글 등록 버튼 -> insert SQL -> 목록 이동
 	@PostMapping("/create")
-	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult) {
+	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal) {
 		
 		if(bindingResult.hasErrors()) {
 			return "question_form";
 		}
 		
-		this.questionService.create(questionForm.getSubject(), questionForm.getContent());
+		SiteUser siteUser = this.userService.getUser(principal.getName());
+		
+		this.questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
 		return "redirect:/question/list";
 	}	
 	// @Valid는 유효성 검사를 하기 위한 어노테이션이다.

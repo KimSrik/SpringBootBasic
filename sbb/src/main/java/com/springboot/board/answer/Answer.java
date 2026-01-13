@@ -3,6 +3,7 @@ package com.springboot.board.answer;
 import java.time.LocalDateTime;
 
 import com.springboot.board.question.Question;
+import com.springboot.board.user.SiteUser;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,5 +30,8 @@ public class Answer {
 	
 	@ManyToOne
 	private Question question;
+	
+	@ManyToOne
+	private SiteUser author;
 
 }

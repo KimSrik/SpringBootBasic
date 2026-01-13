@@ -36,7 +36,7 @@ public class UserController {
 		}
 		
 		try {
-			userService.create(userCreateForm.getUsername(), userCreateForm.getEmail(), userCreateForm.getPassword1());
+			userService.create(userCreateForm.getUsername(), userCreateForm.getPassword1(), userCreateForm.getEmail());
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
 			//reject는 여러 필드에서 오류 처리시(글로벌 에러)

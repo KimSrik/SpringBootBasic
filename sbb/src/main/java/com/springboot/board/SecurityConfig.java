@@ -21,6 +21,10 @@ public class SecurityConfig {
 					.requestMatchers("/**").permitAll())
 			//대상 지정						// 무조건 허락
 			// 로그인을 하지 않은 사용자도 모든 페이지를 볼 수 있도록 허락
+			
+			.formLogin( (formLogin) -> (formLogin)	// GetMapping때 실행
+						.loginPage("/user/login")	// security가 제공하는 컨트롤러 사용 x -> 사용자가 정의한 controller과 getmapping 사용
+						.defaultSuccessUrl("/"))	// 로그인에 성공 했을 때 
 			;
 		return http.build();	// Bean으로 객체 생성 완료.		
 	}

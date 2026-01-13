@@ -51,5 +51,10 @@ public class UserController {
 		
 		return "redirect:/";
 	}
+	
+	@GetMapping("/login")		// security가 제공하는 화면말고 사용자가 만든 페이지로 이동
+	public String login() {
+		return "login_form";
+	}
 
 }

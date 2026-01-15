@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.springboot.board.DataNotFoundException;
 import com.springboot.board.question.Question;
+import com.springboot.board.question.QuestionForm;
 import com.springboot.board.user.SiteUser;
 
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,11 @@ public class AnswerService {
 		answer.setContent(content);
 		answer.setModifyDate(LocalDateTime.now());
 		this.answerRepository.save(answer);
+	}
+	
+	// 답변 삭제하기
+	public void delete(Answer answer) {
+		this.answerRepository.delete(answer);
 	}
 
 }

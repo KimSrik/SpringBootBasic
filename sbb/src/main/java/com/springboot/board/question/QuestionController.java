@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,12 +57,14 @@ public class QuestionController {
 	// 아래 두 메소드는 Overloding.
 	// 맵핑 접근 방식에 따라 실행되는 메소드가 다름
 	// 글 등록 버튼 -> 등록 폼
+	@PreAuthorize("isAuthenticated()")	// 시큐리티에 권한을 넘겨줌
 	@GetMapping("/create")
 	public String questionCreate(QuestionForm questionForm) {
 		return "question_form";
 	}
 	
 	// 글 등록 버튼 -> insert SQL -> 목록 이동
+	@PreAuthorize("isAuthenticated()")	// 시큐리티에 권한을 넘겨줌
 	@PostMapping("/create")
 	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal) {
 		

@@ -10,6 +10,10 @@
 				
 				<div class="d-flex justify-content-end">
 					<div class="badge bg-light text-dark p-2 text-start">
+						<div class="mb-2">
+							<span th:if="${question.author != null}" th:text="${question.author.username}"></span>
+						</div>
+						
 						<div th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></div>
 					</div>
 				</div>
@@ -27,6 +31,10 @@
 				
 				<div class="d-flex justify-content-end">
 					<div class="badge bg-light text-dark p-2 text-start">
+						<div class="mb-2">
+							<span th:if="${answer.author != null}" th:text="${answer.author.username}"> </span>
+						</div>
+							
 						<div th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd')}"></div>
 					</div>
 				</div>
@@ -38,7 +46,11 @@
 		<!-- 답변 등록 -->
 		<form th:action="@{|/answer/create/${question.id}|}" th:object="${answerForm}" method="post">
 			<div th:replace="~{form_errors :: formErrorsFragment}"></div>
-			<textarea class="form-control" name="content" id="content" rows="15"></textarea>
+											  
+			<textarea sec:authorize="isAnonymous()" disable class="form-control" th:field="*{content}" rows="15"></textarea>
+			
+			<textarea sec:authorize="isAuthenticated()" class="form-control" th:field="*{content}" rows="15"></textarea>
+			
 			<input class="btn btn-primary my-2" type="submit" value="답변 등록"/>
 		</form>
 		

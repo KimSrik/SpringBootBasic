@@ -70,7 +70,7 @@ public class AnswerController {
 		return "answer_form";
 	}
 	
-	// 질문 글 수정하기
+	// 답변 수정하기
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/modify/{id}")
 	public String answerModify(@Valid AnswerForm answerForm,

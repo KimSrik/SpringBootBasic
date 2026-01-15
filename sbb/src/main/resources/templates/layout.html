@@ -15,6 +15,7 @@
 
 <body>
 
+	<!-- 네비게이션 바 -->
 	<div th:replace="~{navbar::navbarFragment}"></div>
 
 	<!-- 기본 템플릿 안에 삽입될 내용 -->
@@ -23,6 +24,12 @@
 	
 	<!-- Bootstrap JS -->
 	<script th:src="@{/bootstrap.min.js}"></script>
+	
+	<!-- JS Start -->
+	
+	<th:block layout:fragment="script"></th:block>
+
+	<!-- JS End -->
 
 </body>
 </html>

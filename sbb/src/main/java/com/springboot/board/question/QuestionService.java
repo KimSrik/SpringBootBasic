@@ -73,7 +73,11 @@ public class QuestionService {
 		this.questionRepository.delete(question);
 	}
 	
-	
+	// 질문 글 추천하기
+	public void vote(Question question, SiteUser siteUser) {
+		question.getVoter().add(siteUser);
+		this.questionRepository.save(question);
+	}
 	
 	
 

@@ -9,6 +9,12 @@
 				<div class="card-text" style="white-space:pre-line;" th:text="${question.content}"></div>
 				
 				<div class="d-flex justify-content-end">
+				<!-- 수정 날짜 -->
+					<div th:if="${question.modifyDate != null}" class ="badge bg-light text-dark p-2 text-start mx-3">
+						<div class="mb-2">수정 시간</div>
+						<div th:text="${#temporals.format(question.modifyDate, 'yyyy-MM-dd hh:mm:ss')}"></div>
+					</div>
+				<!--  -->
 					<div class="badge bg-light text-dark p-2 text-start">
 						<div class="mb-2">
 							<span th:if="${question.author != null}" th:text="${question.author.username}"></span>
@@ -16,9 +22,22 @@
 						
 						<div th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></div>
 					</div>
+					
+					
 				</div>
 				
 				<div class="my-3">
+				
+					<!-- 추천 버튼 시작 -->
+					
+					<a href="javascript:void(0);"
+					th:data-uri="@{|/question/vote/${question.id}|}"
+					class="recommend btn btn-sm btn-outline-secondary">추천
+					<span class="badge rounded-pill bg-success" th:text="${#lists.size(question.voter)}"></span>
+					</a>
+					
+					
+					<!-- 추천 버튼 끝 -->
 				
 					<a th:href="@{|/question/modify/${question.id}|}" class="btn btn-sm btn-outline-secondary"
 					   sec:authorize="isAuthenticated()"
@@ -51,6 +70,19 @@
 				<div class="answer-text card-text" style="white-space:pre-line;" th:text="${answer.content}"></div>
 				
 				<div class="d-flex justify-content-end">
+				<!-- 답변 수정 시간 -->
+					
+					<div th:if="${answer.modifyDate != null}" class ="badge bg-light text-dark p-2 text-start mx-3">
+						<div class="mb-2">수정 시간</div>
+						<div th:text="${#temporals.format(answer.modifyDate, 'yyyy-MM-dd hh:mm:ss')}"></div>
+					</div>
+				
+				
+				<!--  -->
+				
+				
+				
+				
 					<div class="badge bg-light text-dark p-2 text-start">
 						<div class="mb-2">
 							<span th:if="${answer.author != null}" th:text="${answer.author.username}"> </span>
@@ -112,6 +144,16 @@
 			});
 		});
 		
+		
+		/* 추천 기능 스크립트 */
+		const recommend_elements = document.getElementsByClassName("recommend");
+		Array.from(recommend_elements).forEach(function(element){
+			element.addEventListener('click', function(){
+				if(confirm("정말로 추천하시겠습니까?")){
+					location.href = this.dataset.uri;
+				};
+			});
+		});
 
 		
 	</script>
